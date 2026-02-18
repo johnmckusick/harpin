@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# Except these files
+!.gitignore
+!harpin-ai-manifesto-deck.html
+!harpin-ai-sales-deck.html

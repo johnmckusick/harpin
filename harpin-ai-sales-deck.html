@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>harpin AI - Enterprise Sales Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Core brand colors - can be customized per vertical */
+            --primary: #0A0A0A;
+            --accent: #3B82F6;
+            --accent-light: #60A5FA;
+            --surface: #FFFFFF;
+            --surface-alt: #F8FAFC;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-inverse: #FFFFFF;
+            --gradient-start: #1E3A8A;
+            --gradient-end: #3B82F6;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Slide Container */
+        .slides-container {
+            width: 100%;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            position: relative;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Typography */
+        .eyebrow {
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .headline {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .headline-large {
+            font-size: 5rem;
+        }
+
+        .subheadline {
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            max-width: 700px;
+        }
+
+        .stat-large {
+            font-size: 6rem;
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        /* Slide Backgrounds */
+        .slide-dark {
+            background: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 100%);
+            color: var(--text-inverse);
+        }
+
+        .slide-dark .subheadline {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .slide-dark .eyebrow {
+            color: var(--accent-light);
+        }
+
+        .slide-light {
+            background: var(--surface);
+        }
+
+        .slide-alt {
+            background: var(--surface-alt);
+        }
+
+        .slide-gradient {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: var(--text-inverse);
+        }
+
+        .slide-gradient .subheadline {
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .card-dark {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .slide-dark .card-text {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-before {
+            color: rgba(255,255,255,0.5);
+            font-size: 1.125rem;
+        }
+
+        .comparison-after {
+            color: var(--text-inverse);
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .comparison-after::before {
+            content: "→ ";
+            color: var(--accent-light);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .slide-dark .stat-number {
+            color: var(--accent-light);
+        }
+
+        /* Logo Grid */
+        .logo-grid {
+            display: flex;
+            gap: 48px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .logo-item {
+            background: rgba(255,255,255,0.1);
+            padding: 24px 40px;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Problem/Pain bullets */
+        .pain-list {
+            list-style: none;
+            margin-top: 32px;
+        }
+
+        .pain-list li {
+            font-size: 1.25rem;
+            padding: 16px 0;
+            padding-left: 40px;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .pain-list li::before {
+            content: "✕";
+            position: absolute;
+            left: 0;
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        /* Solution bullets */
+        .solution-list {
+            list-style: none;
+            margin-top: 32px;
+        }
+
+        .solution-list li {
+            font-size: 1.25rem;
+            padding: 16px 0;
+            padding-left: 40px;
+            position: relative;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .solution-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Case Study */
+        .case-study {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 48px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .case-metric {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            color: var(--accent-light);
+            margin-right: 12px;
+            margin-bottom: 12px;
+        }
+
+        /* Product Cards */
+        .product-card {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 40px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .product-tagline {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .product-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            flex-grow: 1;
+        }
+
+        .product-audience {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .product-audience strong {
+            color: var(--text-primary);
+        }
+
+        /* Trust Bar */
+        .trust-bar {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 24px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .trust-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: white;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 48px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Timeline/Process */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step::after {
+            content: "→";
+            position: absolute;
+            right: -24px;
+            top: 32px;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 auto 20px;
+        }
+
+        .step-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Vertical Indicator */
+        .vertical-indicator {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .slide-dark .vertical-indicator {
+            background: rgba(255,255,255,0.1);
+            color: var(--accent-light);
+        }
+
+        /* Navigation dots */
+        .nav-dots {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Quote */
+        .quote-large {
+            font-size: 2rem;
+            font-weight: 500;
+            font-style: italic;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .quote-attribution {
+            margin-top: 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        /* Footer */
+        .slide-footer {
+            position: absolute;
+            bottom: 24px;
+            left: 80px;
+            right: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .slide-light .slide-footer {
+            color: var(--text-secondary);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 40px;
+            }
+
+            .headline {
+                font-size: 3rem;
+            }
+
+            .headline-large {
+                font-size: 3.5rem;
+            }
+
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .process-step::after {
+                display: none;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .slide {
+                page-break-after: always;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .nav-dots {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Dots (5 hooks + 6 content slides = 11 total) -->
+    <nav class="nav-dots">
+        <!-- Hook Options -->
+        <div class="nav-dot active" data-slide="0" title="Hook H"></div>
+        <div class="nav-dot" data-slide="1" title="Hook I"></div>
+        <div class="nav-dot" data-slide="2" title="Hook J"></div>
+        <div class="nav-dot" data-slide="3" title="Hook E"></div>
+        <div class="nav-dot" data-slide="4" title="Hook G"></div>
+        <!-- Content Slides -->
+        <div class="nav-dot" data-slide="5" title="Problem" style="margin-top: 8px;"></div>
+        <div class="nav-dot" data-slide="6" title="Hero Insight"></div>
+        <div class="nav-dot" data-slide="7" title="Solution"></div>
+        <div class="nav-dot" data-slide="8" title="Why harpin"></div>
+        <div class="nav-dot" data-slide="9" title="Catalyst"></div>
+        <div class="nav-dot" data-slide="10" title="Contact"></div>
+    </nav>
+
+    <div class="slides-container">
+        
+        <!-- ============================================
+             HOOK OPTIONS - 5 variations
+             ============================================ -->
+
+        <!-- HOOK OPTION H: "THE LATENCY PROBLEM" -->
+        <section class="slide slide-dark" id="hook-h">
+            <div class="vertical-indicator">HOOK OPTION H</div>
+            <div class="slide-content" style="text-align: center;">
+                <p class="eyebrow" style="margin-bottom: 32px;">The hidden architecture of lost revenue</p>
+                <h1 class="headline headline-large" style="font-size: 4.5rem; max-width: 1100px; margin: 0 auto;">
+                    Your customer intelligence<br>has a latency problem.
+                </h1>
+                <p class="subheadline" style="max-width: 800px; margin: 48px auto 0;">
+                    By the time insights reach the people who need them, the moment has passed.
+                    The customer has hung up. The booking has been lost. The loyalty has eroded.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 60px; margin-top: 60px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; font-weight: 800; color: var(--accent-light);">47ms</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-top: 8px;">Time for a customer to feel<br>recognized or ignored</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; font-weight: 800; color: rgba(255,255,255,0.3);">47 days</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-top: 8px;">Time for most enterprises<br>to surface the same insight</div>
+                    </div>
+                </div>
+                <p style="color: var(--accent-light); font-size: 1.125rem; margin-top: 48px; font-weight: 500;">
+                    We close the gap.
+                </p>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span style="background: var(--accent); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">HOOK H: "The Latency Problem"</span>
+            </div>
+        </section>
+
+        <!-- HOOK OPTION I: "THE SINGLE CUSTOMER VIEW" -->
+        <section class="slide slide-dark" id="hook-i">
+            <div class="vertical-indicator">HOOK OPTION I</div>
+            <div class="slide-content" style="text-align: center;">
+                <p class="eyebrow" style="margin-bottom: 32px;">The industry's longest-running broken promise</p>
+                <h1 class="headline headline-large" style="font-size: 4.5rem; max-width: 1000px; margin: 0 auto;">
+                    Everyone promised you<br>a single customer view.
+                </h1>
+                <p class="subheadline" style="max-width: 800px; margin: 48px auto 0; font-size: 1.5rem;">
+                    Your CRM promised it. Your CDP promised it. Your data warehouse promised it.
+                </p>
+                <div style="margin-top: 48px;">
+                    <p style="font-size: 2rem; font-weight: 700; color: white;">
+                        You're still searching across 16 systems per call.
+                    </p>
+                </div>
+                <div style="width: 80px; height: 2px; background: var(--accent-light); margin: 48px auto;"></div>
+                <p style="color: var(--accent-light); font-size: 1.25rem; font-weight: 500;">
+                    We actually built it.
+                </p>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span style="background: var(--accent); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">HOOK I: "The Broken Promise"</span>
+            </div>
+        </section>
+
+        <!-- HOOK OPTION J: "THE LAST MILE" -->
+        <section class="slide slide-dark" id="hook-j">
+            <div class="vertical-indicator">HOOK OPTION J</div>
+            <div class="slide-content" style="text-align: center;">
+                <p class="eyebrow" style="margin-bottom: 32px;">harpin AI</p>
+                <h1 class="headline headline-large" style="font-size: 5rem; max-width: 1000px; margin: 0 auto;">
+                    The last mile of<br>customer intelligence.
+                </h1>
+                <p class="subheadline" style="max-width: 800px; margin: 48px auto 0;">
+                    You've invested in collecting the data. You've invested in storing it. 
+                    You've invested in dashboards to visualize it.
+                </p>
+                <div style="margin-top: 48px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    <p style="font-size: 1.5rem; line-height: 1.6; color: white;">
+                        But the person talking to your customer right now?
+                        <br>
+                        <span style="color: var(--accent-light); font-weight: 600;">They're flying blind.</span>
+                    </p>
+                </div>
+                <div style="width: 80px; height: 2px; background: var(--accent-light); margin: 48px auto;"></div>
+                <p style="color: rgba(255,255,255,0.6); font-size: 1.125rem; max-width: 600px; margin: 0 auto;">
+                    We deliver intelligence to the moment it matters.
+                </p>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span style="background: var(--accent); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">HOOK J: "The Last Mile"</span>
+            </div>
+        </section>
+
+        <!-- HOOK OPTION E: "THE QUESTION THEY CAN'T ANSWER" -->
+        <section class="slide slide-dark" id="hook-e">
+            <div class="vertical-indicator">HOOK OPTION E</div>
+            <div class="slide-content" style="text-align: center;">
+                <p class="eyebrow" style="margin-bottom: 32px;">The question no one can answer</p>
+                <h1 class="headline headline-large" style="font-size: 4rem; max-width: 1000px; margin: 0 auto;">
+                    "Who are our 100 most valuable customers<br>across all our brands?"
+                </h1>
+                <p class="subheadline" style="max-width: 750px; margin: 48px auto 0;">
+                    Ask this question at most Fortune 500 companies. Watch the room go silent.
+                    <br><br>
+                    60 million records. 47 systems. And no one can answer the most basic question about your business.
+                    <br><br>
+                    <strong style="color: var(--accent-light);">We change that.</strong>
+                </p>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span style="background: var(--accent); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">HOOK E: "The Question They Can't Answer"</span>
+            </div>
+        </section>
+
+        <!-- HOOK OPTION G: "INTELLIGENCE WITH INTENT" -->
+        <section class="slide slide-dark" id="hook-g">
+            <div class="vertical-indicator">HOOK OPTION G</div>
+            <div class="slide-content" style="text-align: center;">
+                <h1 class="headline" style="font-size: 6rem; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 32px;">
+                    Intelligence<br>with intent.
+                </h1>
+                <p class="subheadline" style="max-width: 700px; margin: 0 auto; font-size: 1.75rem;">
+                    Know your customers. Serve them brilliantly. Grow their value.
+                </p>
+                <div style="width: 80px; height: 2px; background: var(--accent-light); margin: 48px auto;"></div>
+                <p style="color: rgba(255,255,255,0.5); font-size: 1.125rem; max-width: 600px; margin: 0 auto;">
+                    harpin AI is the intelligence partner for enterprise leaders,
+                    turning fragmented customer data into action that happens in the moment.
+                </p>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span style="background: var(--accent); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">HOOK G: "Intelligence With Intent"</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: THE PROBLEM -->
+        <section class="slide slide-dark" id="slide-5">
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div>
+                        <p class="eyebrow">The Problem</p>
+                        <h2 class="headline">What you don't see<br>is costing you.</h2>
+                        <p class="subheadline">
+                            Your dashboards report outcomes. They don't explain <em>why</em> performance changed, 
+                            where revenue is leaking, or where growth is hiding.
+                        </p>
+                        
+                        <ul class="pain-list">
+                            <li>High-value customers routed to general queues</li>
+                            <li>Frontline teams hunting across 16+ systems per call</li>
+                            <li>Agents guessing instead of knowing</li>
+                            <li>Over-compensation eroding margin</li>
+                            <li>Cross-brand loyalty invisible</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="comparison-table">
+                            <h3 style="font-size: 1.25rem; margin-bottom: 24px; color: rgba(255,255,255,0.6);">Your Dashboard Says vs. Reality</h3>
+                            <div class="comparison-row">
+                                <span class="comparison-before">"VIP SLA met"</span>
+                                <span class="comparison-after">Elite guests misrouted during peak demand</span>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-before">"CSAT stable"</span>
+                                <span class="comparison-after">Quiet disengagement before cancellation</span>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-before">"Handle time down"</span>
+                                <span class="comparison-after">Rushed calls suppressing loyalty</span>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-before">"Issues resolved"</span>
+                                <span class="comparison-after">Repeat-contact drivers inflating cost</span>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-before">"Campaign performing"</span>
+                                <span class="comparison-after">Discounts misallocated, yield suppressed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span>Confidential</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: THE HERO INSIGHT / CASE STUDY -->
+        <section class="slide slide-dark" id="slide-6">
+            <div class="slide-content" style="text-align: center;">
+                <p class="eyebrow">A Real Example</p>
+                <h2 class="headline">The invisible leak<br>we made visible.</h2>
+                
+                <div class="case-study" style="margin-top: 48px; text-align: left;">
+                    <p style="font-size: 1.25rem; line-height: 1.7; color: rgba(255,255,255,0.8);">
+                        A cruise partner maintained steady CSAT and green SLAs. Everything looked fine.
+                    </p>
+                    <p style="font-size: 1.25rem; line-height: 1.7; color: rgba(255,255,255,0.8); margin-top: 20px;">
+                        <strong style="color: var(--accent-light);">What we uncovered:</strong>
+                    </p>
+                    <ul style="margin-top: 16px; margin-left: 24px; font-size: 1.125rem; line-height: 2; color: rgba(255,255,255,0.8);">
+                        <li><strong>The Break:</strong> Platinum guests were routed to general queues during peak windows</li>
+                        <li><strong>The Failure:</strong> Agents acknowledged loyalty status in only 15% of those interactions</li>
+                        <li><strong>The Impact:</strong> These guests were 3× more likely to cancel within 45 days</li>
+                    </ul>
+                    
+                    <div style="margin-top: 32px;">
+                        <span class="case-metric">$14,000 lifetime value per guest at risk</span>
+                        <span class="case-metric">$5M+ in savings within 11 months</span>
+                        <span class="case-metric">$100M+ attributed revenue lift</span>
+                    </div>
+                    
+                    <p style="font-size: 1rem; margin-top: 24px; color: rgba(255,255,255,0.6);">
+                        The dashboard showed no warning. We pinpointed the break, the cause, and the revenue at risk, giving leadership immediate clarity on where to intervene.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span>Confidential</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: THE SOLUTION - PRODUCTS -->
+        <section class="slide slide-alt" id="slide-7">
+            <div class="slide-content">
+                <div style="text-align: center; margin-bottom: 48px;">
+                    <p class="eyebrow">The Solution</p>
+                    <h2 class="headline">Intelligence that drives action.</h2>
+                    <p class="subheadline" style="margin: 0 auto;">
+                        Two products. One mission. Know your customers, serve them brilliantly, grow their value.
+                    </p>
+                </div>
+                
+                <div class="grid-2" style="gap: 40px;">
+                    <div class="product-card">
+                        <div class="product-name">Clarity</div>
+                        <div class="product-tagline">Know what's driving and draining your revenue.</div>
+                        <div class="product-description">
+                            Diagnostic intelligence that explains <em>why</em> performance changed and quantifies financial impact. 
+                            Ask questions in plain language. Get board-ready answers in seconds, not weeks.
+                            <br><br>
+                            <strong>The Loyalty Gap:</strong> Why are platinum guests cancelling despite stable satisfaction scores?
+                            <br><br>
+                            <strong>The Yield Miss:</strong> Where are we over-discounting low-value segments while under-serving high-CLTV guests?
+                        </div>
+                        <div class="product-audience">
+                            <strong>Built for:</strong> CROs, CX Leaders, Revenue Operations, Strategy Teams
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-name">Concierge</div>
+                        <div class="product-tagline">Turn service interactions into revenue wins.</div>
+                        <div class="product-description">
+                            Real-time frontline guidance that surfaces context, prompts next-best actions, and protects margin, all within your existing tools.
+                            <br><br>
+                            <strong>The Recognition Moment:</strong> Agent sees this is a 12-visit repeat customer before they even start talking.
+                            <br><br>
+                            <strong>The Governed Action:</strong> AI-suggested recovery that protects margin while making the customer feel valued.
+                        </div>
+                        <div class="product-audience">
+                            <strong>Built for:</strong> Contact Centers, Service Teams, Frontline Hosts, Sales Support
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin-top: 40px; color: var(--text-secondary); font-size: 0.9rem;">
+                    Both powered by <strong>Canon</strong>, our unified data foundation that creates a single source of truth without replacing your existing systems.
+                </p>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span>Confidential</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: HOW WE'RE DIFFERENT -->
+        <section class="slide slide-light" id="slide-8">
+            <div class="slide-content">
+                <div style="text-align: center; margin-bottom: 48px;">
+                    <p class="eyebrow">Why harpin</p>
+                    <h2 class="headline">Not another dashboard.<br>An intelligence partner.</h2>
+                </div>
+                
+                <div class="grid-4">
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="12" cy="12" r="6"/>
+                                <circle cx="12" cy="12" r="2"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Purpose-Built</h3>
+                        <p class="card-text">
+                            We understand loyalty tiers, comp logic, queue dynamics, and multi-brand complexity. We speak your language.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">No Rip & Replace</h3>
+                        <p class="card-text">
+                            Keep using Salesforce, SAP, your CDP, whatever you have. We sit on top and make it all work together.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Action, Not Just Analysis</h3>
+                        <p class="card-text">
+                            Intelligence isn't valuable until someone acts on it. We put insights directly in the workflow.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Trust & Governance</h3>
+                        <p class="card-text">
+                            Every insight is explainable, defensible, and grounded in reconciled data. SOC 2, GDPR, CCPA compliant.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="trust-bar" style="margin-top: 60px;">
+                    <div class="trust-item" style="background: rgba(0,0,0,0.04);">
+                        <div class="trust-icon">✓</div>
+                        <span>SOC 2 Type II</span>
+                    </div>
+                    <div class="trust-item" style="background: rgba(0,0,0,0.04);">
+                        <div class="trust-icon">✓</div>
+                        <span>GDPR Compliant</span>
+                    </div>
+                    <div class="trust-item" style="background: rgba(0,0,0,0.04);">
+                        <div class="trust-icon">✓</div>
+                        <span>CCPA Compliant</span>
+                    </div>
+                    <div class="trust-item" style="background: rgba(0,0,0,0.04);">
+                        <div class="trust-icon">✓</div>
+                        <span>Enterprise Security</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span>Confidential</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: CATALYST -->
+        <section class="slide slide-gradient" id="slide-9">
+            <div class="slide-content">
+                <div style="text-align: center;">
+                    <p class="eyebrow" style="color: rgba(255,255,255,0.8);">Catalyst</p>
+                    <h2 class="headline">See the value before you commit.</h2>
+                    <p class="subheadline" style="margin: 0 auto;">
+                        Catalyst is our proof-of-value engagement. Real ROI with your own data, in days, not months.
+                    </p>
+                </div>
+                
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h4 class="step-title" style="color: white;">Discovery</h4>
+                        <p class="step-desc" style="color: rgba(255,255,255,0.7);">
+                            Understand your pain points and identify a high-value use case
+                        </p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h4 class="step-title" style="color: white;">Data Handoff</h4>
+                        <p class="step-desc" style="color: rgba(255,255,255,0.7);">
+                            Share a data sample. Any format, any system. We handle the complexity
+                        </p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h4 class="step-title" style="color: white;">Insight Session</h4>
+                        <p class="step-desc" style="color: rgba(255,255,255,0.7);">
+                            Within days, see your own data through Clarity. Live. Interactive. Real.
+                        </p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h4 class="step-title" style="color: white;">Expand</h4>
+                        <p class="step-desc" style="color: rgba(255,255,255,0.7);">
+                            Start with one journey, prove ROI, then scale across the enterprise
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="cta-section" style="margin-top: 60px;">
+                    <blockquote class="quote-large" style="font-size: 1.5rem;">
+                        "By the time we're discussing contracts, you've already seen the value in your own data."
+                    </blockquote>
+                </div>
+            </div>
+            <div class="slide-footer" style="color: rgba(255,255,255,0.5);">
+                <span class="logo-text">harpin AI</span>
+                <span>Confidential</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: ABOUT + CTA -->
+        <section class="slide slide-dark" id="slide-10">
+            <div class="slide-content" style="text-align: center;">
+                <p class="eyebrow">About harpin AI</p>
+                <h2 class="headline">The intelligence partner<br>for enterprise leaders.</h2>
+                
+                <p class="subheadline" style="margin: 24px auto 0;">
+                    Deep domain expertise. Proven enterprise results. Purpose-built AI.
+                </p>
+                
+                <div class="logo-grid" style="margin-top: 48px;">
+                    <div class="logo-item">Princess Cruises</div>
+                    <div class="logo-item">Marriott</div>
+                    <div class="logo-item">RCI</div>
+                </div>
+                
+                <div class="stats-row" style="margin-top: 60px;">
+                    <div class="stat-item">
+                        <div class="stat-number">$100M+</div>
+                        <div class="stat-label">Attributed revenue lift</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$5M+</div>
+                        <div class="stat-label">Cost savings in 11 months</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">Days</div>
+                        <div class="stat-label">To first insight, not months</div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <a href="#" class="cta-button">Schedule a Discovery Call</a>
+                    <p style="margin-top: 20px; color: rgba(255,255,255,0.5); font-size: 0.9rem;">
+                        See your own data through Clarity. No commitment required.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="logo-text">harpin AI</span>
+                <span>© 2026 harpin AI. All rights reserved.</span>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Simple navigation
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        const container = document.querySelector('.slides-container');
+        
+        // Update active dot on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(slides).indexOf(entry.target);
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        slides.forEach(slide => observer.observe(slide));
+        
+        // Click to navigate
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideIndex = parseInt(dot.dataset.slide);
+                slides[slideIndex].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const currentSlide = Array.from(slides).findIndex(slide => {
+                const rect = slide.getBoundingClientRect();
+                return rect.top >= 0 && rect.top < window.innerHeight / 2;
+            });
+
+            if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentSlide < slides.length - 1) {
+                    slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentSlide > 0) {
+                    slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+
+    <!-- 
+    ============================================
+    VERTICAL CUSTOMIZATION GUIDE
+    ============================================
+    
+    To adapt this deck for different industries, modify the following:
+
+    HOSPITALITY / HOTELS:
+    - Change "guests" terminology throughout
+    - Case study: property recognition across brands
+    - Pain: "A guest who stayed at your Miami property calls your Scottsdale concierge"
+    - Metrics: RevPAR, direct booking conversion, repeat stay rate
+
+    CRUISE LINES:
+    - Current default positioning
+    - Onboard revenue, itinerary changes, shore excursions
+    - Metrics: Per-passenger yield, rebooking rate, package attachment
+
+    GAMING / CASINOS:
+    - Change "guests" to "players" where appropriate  
+    - Focus on host relationships, comp governance
+    - Pain: "Your hosts need to know who's walking through the door"
+    - Metrics: Theo, ADT, trip frequency, reinvestment rates
+
+    FOOD SERVICE / QSR:
+    - Change to "customers" / "diners"
+    - Multi-brand loyalty across restaurant concepts
+    - Pain: "Customers across multiple brands who don't know they're loyal to you"
+    - Metrics: Frequency, ticket size, cross-brand visits
+
+    RETAIL:
+    - "Customers" / "shoppers"
+    - Omnichannel recognition (online/in-store)
+    - Pain: "Your online and in-store data don't talk to each other"
+    - Metrics: CLV, cross-category purchase, basket size
+
+    HEALTHCARE / INSURANCE (if expanding):
+    - "Members" / "patients"
+    - Focus on care coordination, satisfaction, retention
+    - Heavy compliance emphasis
+
+    ============================================
+    -->
+</body>
+</html>

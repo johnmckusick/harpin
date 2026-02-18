@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>harpin AI - The Intelligence Imperative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A;
+            --white: #FFFFFF;
+            --cream: #F5F3EF;
+            --accent: #1E40AF;
+            --accent-light: #3B82F6;
+            --gold: #B8860B;
+            --text-muted: #6B7280;
+            --danger: #DC2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* Scroll container */
+        .slides-container {
+            width: 100%;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-inner {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 80px 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Typography - Dramatic */
+        .serif {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        .headline-massive {
+            font-size: 7rem;
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 32px;
+        }
+
+        .headline-large {
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 32px;
+        }
+
+        .headline-medium {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .subhead {
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.7);
+            max-width: 700px;
+        }
+
+        .manifesto-text {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.7;
+            max-width: 900px;
+        }
+
+        .manifesto-text em {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic;
+            color: var(--accent-light);
+        }
+
+        .stat-huge {
+            font-size: 10rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.05em;
+        }
+
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, rgba(59, 130, 246, 0.3) 60%);
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Backgrounds */
+        .bg-black {
+            background: var(--black);
+        }
+
+        .bg-cream {
+            background: var(--cream);
+            color: var(--black);
+        }
+
+        .bg-cream .subhead {
+            color: rgba(0,0,0,0.6);
+        }
+
+        .bg-gradient {
+            background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%);
+        }
+
+        .bg-dark-gradient {
+            background: linear-gradient(180deg, #0A0A0A 0%, #1a1a2e 50%, #0A0A0A 100%);
+        }
+
+        /* Decorative elements */
+        .corner-mark {
+            position: absolute;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .corner-mark.top-right {
+            top: 40px;
+            right: 60px;
+        }
+
+        .corner-mark.bottom-left {
+            bottom: 40px;
+            left: 60px;
+        }
+
+        .bg-cream .corner-mark {
+            color: rgba(0,0,0,0.3);
+        }
+
+        .divider-line {
+            width: 80px;
+            height: 2px;
+            background: var(--accent-light);
+            margin: 40px 0;
+        }
+
+        .bg-cream .divider-line {
+            background: var(--black);
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+
+        /* Statement cards */
+        .statement-card {
+            padding: 48px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .statement-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .statement-card p {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Contrast blocks */
+        .contrast-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .contrast-left {
+            background: rgba(220, 38, 38, 0.1);
+            padding: 60px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contrast-right {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 60px;
+        }
+
+        .contrast-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .contrast-left .contrast-label {
+            color: var(--danger);
+        }
+
+        .contrast-right .contrast-label {
+            color: var(--accent-light);
+        }
+
+        .contrast-list {
+            list-style: none;
+        }
+
+        .contrast-list li {
+            font-size: 1.25rem;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contrast-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Quote */
+        .quote-block {
+            border-left: 4px solid var(--accent-light);
+            padding-left: 40px;
+            margin: 60px 0;
+        }
+
+        .quote-text {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .quote-attribution {
+            margin-top: 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Product section */
+        .product-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin-top: 60px;
+        }
+
+        .product-item {
+            padding: 60px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .product-name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .product-tagline {
+            font-size: 1.25rem;
+            color: rgba(0,0,0,0.5);
+            margin-bottom: 24px;
+        }
+
+        .product-description {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: rgba(0,0,0,0.7);
+        }
+
+        /* Metrics */
+        .metrics-row {
+            display: flex;
+            gap: 80px;
+            margin-top: 60px;
+        }
+
+        .metric-item {
+            text-align: left;
+        }
+
+        .metric-value {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: var(--accent-light);
+        }
+
+        .bg-cream .metric-value {
+            color: var(--accent);
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 8px;
+        }
+
+        .bg-cream .metric-label {
+            color: rgba(0,0,0,0.5);
+        }
+
+        /* Process */
+        .process-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .process-item {
+            position: relative;
+        }
+
+        .process-number {
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.1);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .process-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .process-desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 24px 64px;
+            background: var(--white);
+            color: var(--black);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-light);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Logos */
+        .logo-row {
+            display: flex;
+            gap: 48px;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .logo-item {
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.4);
+            padding: 16px 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Navigation */
+        .nav-indicator {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            margin: 12px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-light);
+            transform: scale(1.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide-inner {
+                padding: 60px 40px;
+            }
+
+            .headline-massive {
+                font-size: 4rem;
+            }
+
+            .headline-large {
+                font-size: 3rem;
+            }
+
+            .grid-2, .grid-3, .contrast-block, .product-showcase, .process-row {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-row {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+
+        /* Print */
+        @media print {
+            .slide {
+                page-break-after: always;
+            }
+            .nav-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-indicator">
+        <div class="nav-dot active" data-slide="0"></div>
+        <div class="nav-dot" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+        <div class="nav-dot" data-slide="4"></div>
+        <div class="nav-dot" data-slide="5"></div>
+        <div class="nav-dot" data-slide="6"></div>
+    </nav>
+
+    <div class="slides-container">
+
+        <!-- SLIDE 1: THE MANIFESTO HOOK -->
+        <section class="slide bg-black" id="slide-0">
+            <span class="corner-mark top-right">harpin AI</span>
+            <span class="corner-mark bottom-left">The Intelligence Imperative</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow">A Manifesto</p>
+                
+                <h1 class="headline-massive">
+                    We have a<br>
+                    <span class="serif">customer</span><br>
+                    <span class="serif">intelligence</span><br>
+                    crisis.
+                </h1>
+                
+                <div class="divider-line"></div>
+                
+                <p class="subhead">
+                    The data exists. The technology exists. The customers exist.<br>
+                    What's missing is the <em class="serif">truth</em>.
+                </p>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: THE PROBLEM - DRAMATIC -->
+        <section class="slide bg-dark-gradient" id="slide-1">
+            <span class="corner-mark top-right">The Problem</span>
+            
+            <div class="slide-inner">
+                <div class="manifesto-text">
+                    Your enterprise has invested <em>hundreds of millions</em> in technology.<br><br>
+                    
+                    You have a CRM. A CDP. A data warehouse. A loyalty platform. 
+                    A contact center suite. Analytics dashboards. AI pilots.<br><br>
+                    
+                    And yet.<br><br>
+                    
+                    When your most valuable customer calls, <em>your agent doesn't know who they are.</em><br><br>
+                    
+                    When your CMO asks "who are our best customers across brands?" <em>Nobody can answer.</em><br><br>
+                    
+                    When your dashboards show green, <em>millions in lifetime value are quietly walking out the door.</em>
+                </div>
+                
+                <div class="quote-block">
+                    <p class="quote-text">
+                        "We have 60 million customer records across 47 systems.<br>
+                        We can't tell you who our top 100 customers are."
+                    </p>
+                    <p class="quote-attribution">VP of Customer Experience, Fortune 500 Enterprise</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: THE CONTRAST -->
+        <section class="slide bg-black" id="slide-2">
+            <span class="corner-mark top-right">The Gap</span>
+            
+            <div class="slide-inner">
+                <h2 class="headline-large">
+                    The dashboard says one thing.<br>
+                    <span style="color: rgba(255,255,255,0.4);">Reality says another.</span>
+                </h2>
+                
+                <div class="contrast-block" style="margin-top: 60px;">
+                    <div class="contrast-left">
+                        <p class="contrast-label">What the dashboard shows</p>
+                        <ul class="contrast-list">
+                            <li>"VIP SLA met"</li>
+                            <li>"CSAT stable at 4.2"</li>
+                            <li>"Handle time reduced 12%"</li>
+                            <li>"Issues resolved same-day"</li>
+                            <li>"Campaign ROI positive"</li>
+                        </ul>
+                    </div>
+                    <div class="contrast-right">
+                        <p class="contrast-label">What's actually happening</p>
+                        <ul class="contrast-list">
+                            <li>Elite customers routed to general queues during peak</li>
+                            <li>Quiet disengagement: cancellations up 3x in 45 days</li>
+                            <li>Rushed calls suppressing loyalty and future spend</li>
+                            <li>Repeat contacts inflating cost-to-serve</li>
+                            <li>Discounts misallocated, yield being suppressed</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="metrics-row">
+                    <div class="metric-item">
+                        <div class="metric-value">$14K</div>
+                        <div class="metric-label">Lifetime value lost per mishandled VIP</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">85%</div>
+                        <div class="metric-label">Elite customers unrecognized at peak hours</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">15%</div>
+                        <div class="metric-label">Of interactions where loyalty status is acknowledged</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: THE PHILOSOPHY -->
+        <section class="slide bg-cream" id="slide-3">
+            <span class="corner-mark top-right">Our Belief</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow" style="color: var(--accent);">What We Believe</p>
+                
+                <h2 class="headline-large serif" style="max-width: 900px;">
+                    Great technology should prove itself.
+                </h2>
+                
+                <div class="divider-line"></div>
+                
+                <p class="manifesto-text" style="color: rgba(0,0,0,0.8);">
+                    We don't believe in 18-month implementations that deliver dashboards nobody uses.<br><br>
+                    
+                    We don't believe in selling infrastructure. We believe in <em>selling outcomes</em>.<br><br>
+                    
+                    We believe the value should be visible, in your own data, with your own customers, <em>before you sign anything.</em><br><br>
+                    
+                    We believe intelligence isn't valuable until someone <em>acts on it.</em>
+                </p>
+                
+                <div class="grid-3" style="margin-top: 80px;">
+                    <div class="statement-card" style="background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--black);">Truth Over Dashboards</h3>
+                        <p style="color: rgba(0,0,0,0.6);">Your KPIs can be green while your business bleeds. We expose what surface metrics miss.</p>
+                    </div>
+                    <div class="statement-card" style="background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--black);">Action Over Analysis</h3>
+                        <p style="color: rgba(0,0,0,0.6);">Intelligence belongs in the workflow, where people can do something about it.</p>
+                    </div>
+                    <div class="statement-card" style="background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--black);">Domain Over Generic</h3>
+                        <p style="color: rgba(0,0,0,0.6);">We understand loyalty tiers, comp logic, queue dynamics. We speak your language.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: THE SOLUTION -->
+        <section class="slide bg-cream" id="slide-4">
+            <span class="corner-mark top-right">The Solution</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow" style="color: var(--accent);">Two Products. One Mission.</p>
+                
+                <h2 class="headline-medium" style="color: var(--black);">
+                    Intelligence that sees what dashboards miss.<br>
+                    Action that happens while the customer is still there.
+                </h2>
+                
+                <div class="product-showcase">
+                    <div class="product-item" style="background: var(--white);">
+                        <h3 class="product-name" style="color: var(--accent);">Clarity</h3>
+                        <p class="product-tagline">Know what's driving and draining your revenue.</p>
+                        <p class="product-description">
+                            Diagnostic intelligence that explains <em>why</em> performance changed. 
+                            Ask questions in plain language. Get board-ready answers in seconds.<br><br>
+                            <strong>The question it answers:</strong><br>
+                            "Why are platinum customers canceling despite stable satisfaction scores?"
+                        </p>
+                    </div>
+                    <div class="product-item" style="background: var(--white);">
+                        <h3 class="product-name" style="color: var(--accent);">Concierge</h3>
+                        <p class="product-tagline">Turn every interaction into a revenue moment.</p>
+                        <p class="product-description">
+                            Real-time frontline guidance. Surfaces context, prompts next-best actions, 
+                            protects margin, all within your existing tools.<br><br>
+                            <strong>The moment it creates:</strong><br>
+                            "Agent sees 12-cruise repeat guest before they even start talking."
+                        </p>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin-top: 40px; color: rgba(0,0,0,0.5); font-size: 0.9rem;">
+                    Both powered by <strong>Canon</strong>, unified data foundation that creates a single source of truth without replacing your existing systems.
+                </p>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: THE PROOF / ENGAGEMENT -->
+        <section class="slide bg-gradient" id="slide-5">
+            <span class="corner-mark top-right">The Approach</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow" style="color: rgba(255,255,255,0.7);">Our Approach</p>
+                
+                <h2 class="headline-large">
+                    See the value in your own data.<br>
+                    <span class="serif">Before you commit to anything.</span>
+                </h2>
+                
+                <p class="subhead" style="margin-top: 24px;">
+                    We call it Catalyst. Send us your data. Any format, any mess. 
+                    Within days, we'll show you insights you didn't know you had.
+                </p>
+                
+                <div class="process-row">
+                    <div class="process-item">
+                        <div class="process-number">01</div>
+                        <h4 class="process-title">Discovery</h4>
+                        <p class="process-desc">We understand your pain. We identify one high-value use case to prove it.</p>
+                    </div>
+                    <div class="process-item">
+                        <div class="process-number">02</div>
+                        <h4 class="process-title">Data Handoff</h4>
+                        <p class="process-desc">You share a sample. Spreadsheets, databases, APIs. We handle the complexity.</p>
+                    </div>
+                    <div class="process-item">
+                        <div class="process-number">03</div>
+                        <h4 class="process-title">Insight Session</h4>
+                        <p class="process-desc">Within days, see your own data through Clarity. Live. Interactive. Real.</p>
+                    </div>
+                    <div class="process-item">
+                        <div class="process-number">04</div>
+                        <h4 class="process-title">Expand</h4>
+                        <p class="process-desc">Start with one journey. Prove ROI. Then scale across the enterprise.</p>
+                    </div>
+                </div>
+                
+                <div class="quote-block" style="margin-top: 80px; border-color: rgba(255,255,255,0.3);">
+                    <p class="quote-text" style="font-size: 2rem;">
+                        "By the time we discuss contracts, you've already seen the value."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: THE CLOSE -->
+        <section class="slide bg-black" id="slide-6">
+            <span class="corner-mark top-right">harpin AI</span>
+            
+            <div class="slide-inner" style="text-align: center;">
+                <p class="eyebrow">Results</p>
+                
+                <h2 class="headline-large">
+                    The intelligence partner<br>
+                    for enterprise leaders.
+                </h2>
+                
+                <div class="logo-row" style="justify-content: center; margin-top: 48px;">
+                    <div class="logo-item">Princess Cruises</div>
+                    <div class="logo-item">Marriott</div>
+                    <div class="logo-item">RCI</div>
+                </div>
+                
+                <div class="metrics-row" style="justify-content: center; margin-top: 60px;">
+                    <div class="metric-item" style="text-align: center;">
+                        <div class="metric-value">$100M+</div>
+                        <div class="metric-label">Attributed revenue lift</div>
+                    </div>
+                    <div class="metric-item" style="text-align: center;">
+                        <div class="metric-value">$5M+</div>
+                        <div class="metric-label">Cost savings in 11 months</div>
+                    </div>
+                    <div class="metric-item" style="text-align: center;">
+                        <div class="metric-value">Days</div>
+                        <div class="metric-label">To first insight, not months</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: center; gap: 24px; margin-top: 40px; flex-wrap: wrap;">
+                    <span style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.875rem; color: rgba(255,255,255,0.6);">SOC 2 Type II</span>
+                    <span style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.875rem; color: rgba(255,255,255,0.6);">GDPR Compliant</span>
+                    <span style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.875rem; color: rgba(255,255,255,0.6);">CCPA Compliant</span>
+                    <span style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.875rem; color: rgba(255,255,255,0.6);">Enterprise Security</span>
+                </div>
+                
+                <div class="cta-section">
+                    <a href="#" class="cta-button">Request a Discovery Session</a>
+                    <p style="margin-top: 24px; color: rgba(255,255,255,0.4); font-size: 0.9rem;">
+                        See your data through Clarity. No commitment required.
+                    </p>
+                </div>
+                
+                <div style="margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <p style="font-size: 1.5rem; font-weight: 300; color: rgba(255,255,255,0.5);">
+                        <span class="serif" style="font-style: italic;">"Every interaction is a revenue event.<br>We make sure the right action happens in the moment."</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Navigation
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        const container = document.querySelector('.slides-container');
+        
+        // Update active dot on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(slides).indexOf(entry.target);
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        slides.forEach(slide => observer.observe(slide));
+        
+        // Click navigation
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideIndex = parseInt(dot.dataset.slide);
+                slides[slideIndex].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const currentSlide = Array.from(slides).findIndex(slide => {
+                const rect = slide.getBoundingClientRect();
+                return rect.top >= 0 && rect.top < window.innerHeight / 2;
+            });
+
+            if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentSlide < slides.length - 1) {
+                    slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentSlide > 0) {
+                    slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+
+    <!-- 
+    ============================================
+    VERTICAL CUSTOMIZATION GUIDE
+    ============================================
+    
+    This manifesto-style deck is industry-agnostic by default.
+    To customize for specific verticals:
+
+    SLIDE 1 (Hook):
+    - Keep as-is - "customer intelligence crisis" works for all verticals
+    
+    SLIDE 2 (Problem):
+    - Swap the quote for industry-specific version:
+      - Cruise: "60 million passenger records across 47 systems..."
+      - Gaming: "We don't know who's walking through the door..."
+      - Retail: "Online and in-store customers are strangers to each other..."
+
+    SLIDE 3 (Contrast):
+    - Update metrics with vertical-specific examples:
+      - Gaming: "Theo" instead of "lifetime value"
+      - Retail: "basket size" and "cross-category purchase"
+      - QSR: "visit frequency" and "ticket size"
+
+    SLIDE 4 (Philosophy):
+    - Keep as-is - philosophy is universal
+
+    SLIDE 5 (Solution):
+    - Update "The moment it creates" examples:
+      - Gaming: "Host sees player's full history before they reach the cage"
+      - Retail: "Associate sees online browse history when customer walks in"
+      - QSR: "Counter sees cross-brand loyalty before order is placed"
+
+    SLIDE 6 (Approach):
+    - Keep as-is - Catalyst process is universal
+
+    SLIDE 7 (Close):
+    - Update logos for relevant vertical
+    - Keep metrics or swap for vertical-specific proof points
+
+    ============================================
+    -->
+</body>
+</html>
