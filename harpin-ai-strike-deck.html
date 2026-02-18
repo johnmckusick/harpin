@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>harpin AI - Sales Strike Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A;
+            --white: #FFFFFF;
+            --cream: #F8F6F2;
+            --accent: #1E40AF;
+            --accent-light: #3B82F6;
+            --accent-glow: #60A5FA;
+            --danger: #DC2626;
+            --danger-soft: rgba(220, 38, 38, 0.15);
+            --success: #10B981;
+            --success-soft: rgba(16, 185, 129, 0.15);
+            --gold: #D4AF37;
+            --text-muted: #6B7280;
+            --text-soft: rgba(255,255,255,0.7);
+            --border-light: rgba(255,255,255,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        .slides-container {
+            width: 100%;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-inner {
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 80px 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Typography */
+        .serif {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .eyebrow {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .headline-hero {
+            font-size: 5.5rem;
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 32px;
+        }
+
+        .headline-large {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 28px;
+        }
+
+        .headline-medium {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .subhead {
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 1.65;
+            color: var(--text-soft);
+            max-width: 680px;
+        }
+
+        .highlight {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+
+        .highlight-gold {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            color: rgba(255,255,255,0.35);
+        }
+
+        /* Backgrounds */
+        .bg-black {
+            background: var(--black);
+        }
+
+        .bg-dark-gradient {
+            background: linear-gradient(160deg, #0A0A0A 0%, #111827 50%, #0A0A0A 100%);
+        }
+
+        .bg-blue-gradient {
+            background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #1E40AF 100%);
+        }
+
+        .bg-cream {
+            background: var(--cream);
+            color: var(--black);
+        }
+
+        .bg-cream .subhead {
+            color: rgba(0,0,0,0.6);
+        }
+
+        .bg-cream .eyebrow {
+            color: var(--accent);
+        }
+
+        /* Decorative */
+        .corner-mark {
+            position: absolute;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.25);
+        }
+
+        .corner-mark.top-left {
+            top: 32px;
+            left: 48px;
+        }
+
+        .corner-mark.top-right {
+            top: 32px;
+            right: 48px;
+        }
+
+        .corner-mark.bottom-left {
+            bottom: 32px;
+            left: 48px;
+        }
+
+        .corner-mark.bottom-right {
+            bottom: 32px;
+            right: 48px;
+        }
+
+        .bg-cream .corner-mark {
+            color: rgba(0,0,0,0.25);
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--accent-light);
+            margin: 32px 0;
+        }
+
+        .bg-cream .divider {
+            background: var(--accent);
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        /* Iceberg Visual */
+        .iceberg-container {
+            position: relative;
+            margin-top: 48px;
+        }
+
+        .iceberg-above {
+            background: var(--success-soft);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px 12px 0 0;
+            padding: 28px 36px;
+        }
+
+        .iceberg-waterline {
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-light), transparent);
+            position: relative;
+        }
+
+        .iceberg-waterline::before {
+            content: 'WATERLINE';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: var(--accent-light);
+            background: var(--black);
+            padding: 4px 12px;
+        }
+
+        .iceberg-below {
+            background: var(--danger-soft);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 0 0 12px 12px;
+            padding: 28px 36px;
+        }
+
+        .iceberg-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .iceberg-above .iceberg-label {
+            color: var(--success);
+        }
+
+        .iceberg-below .iceberg-label {
+            color: var(--danger);
+        }
+
+        .iceberg-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-size: 1rem;
+        }
+
+        .iceberg-item:last-child {
+            border-bottom: none;
+        }
+
+        .iceberg-item .metric {
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+
+        .iceberg-item .reality {
+            color: var(--white);
+            font-weight: 500;
+            text-align: right;
+            max-width: 55%;
+        }
+
+        /* Stats */
+        .stat-block {
+            text-align: center;
+            padding: 32px;
+        }
+
+        .stat-value {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-value.danger {
+            background: linear-gradient(135deg, var(--danger), #EF4444);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            margin-top: 12px;
+            line-height: 1.4;
+        }
+
+        .bg-cream .stat-value {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .bg-cream .stat-label {
+            color: rgba(0,0,0,0.5);
+        }
+
+        /* Funnel Visual */
+        .funnel-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-top: 48px;
+        }
+
+        .funnel-input {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .funnel-source {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-size: 0.9rem;
+            color: var(--text-soft);
+            position: relative;
+        }
+
+        .funnel-source::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid var(--accent-light);
+        }
+
+        .funnel-engine {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 0 60px rgba(59, 130, 246, 0.3);
+        }
+
+        .funnel-engine-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .funnel-engine-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .funnel-output {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .funnel-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 20px 24px;
+            position: relative;
+        }
+
+        .funnel-card::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 8px solid var(--accent-light);
+        }
+
+        .funnel-card-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 6px;
+        }
+
+        .funnel-card-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        /* Split Screen Comparison */
+        .split-screen {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 40px;
+        }
+
+        .split-left {
+            background: var(--danger-soft);
+            padding: 40px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .split-right {
+            background: var(--success-soft);
+            padding: 40px;
+        }
+
+        .split-header {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .split-left .split-header {
+            color: var(--danger);
+        }
+
+        .split-right .split-header {
+            color: var(--success);
+        }
+
+        .split-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-soft);
+        }
+
+        .split-content strong {
+            color: var(--white);
+        }
+
+        .split-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 48px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 32px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--success));
+            border-radius: 2px;
+        }
+
+        .timeline-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .timeline-marker {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-day {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--text-soft);
+            line-height: 1.5;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        /* Product Cards */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+        }
+
+        .product-name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .product-tagline {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .product-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(0,0,0,0.7);
+            margin-bottom: 24px;
+        }
+
+        .product-question {
+            background: rgba(59, 130, 246, 0.08);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .product-question strong {
+            display: block;
+            font-style: normal;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        /* Quote */
+        .quote-block {
+            border-left: 4px solid var(--accent-light);
+            padding-left: 32px;
+            margin: 48px 0;
+        }
+
+        .quote-text {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            font-style: italic;
+            line-height: 1.45;
+            color: var(--white);
+        }
+
+        .quote-source {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--text-soft);
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 22px 56px;
+            background: var(--white);
+            color: var(--black);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-light);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Trust Badges */
+        .trust-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .trust-badge {
+            padding: 12px 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Logo Row */
+        .logo-row {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .logo-item {
+            padding: 16px 28px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Navigation */
+        .nav-indicator {
+            position: fixed;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-light);
+            transform: scale(1.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide-inner {
+                padding: 60px 40px;
+            }
+
+            .headline-hero {
+                font-size: 3.5rem;
+            }
+
+            .headline-large {
+                font-size: 2.8rem;
+            }
+
+            .grid-2, .grid-3, .split-screen, .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .funnel-container {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .timeline::before {
+                display: none;
+            }
+        }
+
+        @media print {
+            .slide {
+                page-break-after: always;
+            }
+            .nav-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-indicator">
+        <div class="nav-dot active" data-slide="0"></div>
+        <div class="nav-dot" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+        <div class="nav-dot" data-slide="4"></div>
+        <div class="nav-dot" data-slide="5"></div>
+        <div class="nav-dot" data-slide="6"></div>
+        <div class="nav-dot" data-slide="7"></div>
+    </nav>
+
+    <div class="slides-container">
+
+        <!-- SLIDE 1: THE HOOK -->
+        <section class="slide bg-black" id="slide-0">
+            <span class="corner-mark top-left">harpin AI</span>
+            <span class="corner-mark top-right">Confidential</span>
+            <span class="corner-mark bottom-right">Feb 2026</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow">The New Reality</p>
+                
+                <h1 class="headline-hero">
+                    Stop looking in<br>
+                    the <span class="serif">rearview mirror.</span>
+                </h1>
+                
+                <div class="divider"></div>
+                
+                <p class="subhead">
+                    Your dashboards tell you what happened yesterday.<br>
+                    They can't tell you <span class="highlight">why performance shifted</span> or <span class="highlight">where your next million dollars is hiding.</span>
+                </p>
+
+                <div class="grid-3" style="margin-top: 60px;">
+                    <div class="stat-block">
+                        <div class="stat-value">$14K</div>
+                        <div class="stat-label">Lifetime value per VIP guest<br>at risk every misstep</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">85%</div>
+                        <div class="stat-label">Elite customers unrecognized<br>during peak hours</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">16+</div>
+                        <div class="stat-label">Systems agents search<br>per single call</div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 48px; color: var(--accent-light); font-size: 1.1rem; font-weight: 500;">
+                    We show you what the dashboards miss and help you act before the moment passes.
+                </p>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: THE HIDDEN PROBLEM (ICEBERG) -->
+        <section class="slide bg-dark-gradient" id="slide-1">
+            <span class="corner-mark top-left">harpin AI</span>
+            <span class="corner-mark top-right">The Hidden Problem</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow">What You Don't Know Is Costing You</p>
+                
+                <h2 class="headline-large">
+                    "Green" dashboards can<br>
+                    still mean <span class="highlight-gold">red P&Ls.</span>
+                </h2>
+
+                <div class="iceberg-container">
+                    <div class="iceberg-above">
+                        <div class="iceberg-label">What You See</div>
+                        <div class="iceberg-item">
+                            <span class="metric">VIP SLA Attainment</span>
+                            <span class="reality" style="color: var(--success); display: flex; align-items: center; gap: 8px;">98% <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        </div>
+                        <div class="iceberg-item">
+                            <span class="metric">Customer Satisfaction</span>
+                            <span class="reality" style="color: var(--success); display: flex; align-items: center; gap: 8px;">4.2 / 5.0 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        </div>
+                        <div class="iceberg-item">
+                            <span class="metric">Handle Time</span>
+                            <span class="reality" style="color: var(--success); display: flex; align-items: center; gap: 8px;">Down 12% <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        </div>
+                    </div>
+
+                    <div class="iceberg-waterline"></div>
+
+                    <div class="iceberg-below">
+                        <div class="iceberg-label">The Hidden Reality</div>
+                        <div class="iceberg-item">
+                            <span class="metric">Platinum guests waited 12 min</span>
+                            <span class="reality">...while "General" answered in 30 sec</span>
+                        </div>
+                        <div class="iceberg-item">
+                            <span class="metric">"Stable" CSAT score</span>
+                            <span class="reality">...masks 3x cancellation spike in top 5%</span>
+                        </div>
+                        <div class="iceberg-item">
+                            <span class="metric">Faster handle time</span>
+                            <span class="reality">...rushing calls that suppress loyalty and spend</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 48px;">
+                    <p style="font-size: 1.25rem; color: var(--white);">
+                        <span class="highlight-gold">$14,000 LTV per guest</span> is not just a metric. It is a leak you can plug.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: THE TIPPING POINT (FUNNEL OF TRUTH) -->
+        <section class="slide bg-black" id="slide-2">
+            <span class="corner-mark top-left">harpin AI</span>
+            <span class="corner-mark top-right">The Tipping Point</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow">From Data to Board-Ready Answers</p>
+                
+                <h2 class="headline-large">
+                    Kill the "data argument"<br>
+                    <span style="color: var(--text-soft);">before it starts.</span>
+                </h2>
+
+                <p class="subhead" style="margin-bottom: 20px;">
+                    We reconcile CRM, POS, and CDP into a single source of truth so your Board Meeting focuses on <span class="highlight">strategy, not "whose numbers are right."</span>
+                </p>
+
+                <div class="funnel-container">
+                    <div class="funnel-input">
+                        <div class="funnel-source">CRM Data (fragmented)</div>
+                        <div class="funnel-source">POS Transactions</div>
+                        <div class="funnel-source">CDP Segments</div>
+                        <div class="funnel-source">Call Logs / Metadata</div>
+                        <div class="funnel-source">Loyalty Platform</div>
+                    </div>
+
+                    <div class="funnel-engine">
+                        <div class="funnel-engine-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+                                <line x1="12" y1="22" x2="12" y2="15.5"/>
+                                <polyline points="22 8.5 12 15.5 2 8.5"/>
+                                <polyline points="2 15.5 12 8.5 22 15.5"/>
+                                <line x1="12" y1="2" x2="12" y2="8.5"/>
+                            </svg>
+                        </div>
+                        <div class="funnel-engine-label">harpin AI</div>
+                    </div>
+
+                    <div class="funnel-output">
+                        <div class="funnel-card">
+                            <div class="funnel-card-title">Revenue at Risk</div>
+                            <div class="funnel-card-value">$2.4M in platinum churn</div>
+                        </div>
+                        <div class="funnel-card">
+                            <div class="funnel-card-title">Loyalty Lift</div>
+                            <div class="funnel-card-value">+18% recognition rate</div>
+                        </div>
+                        <div class="funnel-card">
+                            <div class="funnel-card-title">Churn Forecast</div>
+                            <div class="funnel-card-value">45-day risk cohort ID'd</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 48px;">
+                    <p style="font-size: 1.1rem; color: var(--text-soft);">
+                        Move from <span class="strikethrough">"How's the quarter looking?"</span> to <span class="highlight">"Here's the $2M recovery plan"</span> in seconds.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: THE FIRST STRIKE (SPLIT SCREEN) -->
+        <section class="slide bg-dark-gradient" id="slide-3">
+            <span class="corner-mark top-left">harpin AI</span>
+            <span class="corner-mark top-right">The First Strike</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow">Solving Problems in the Live Moment</p>
+                
+                <h2 class="headline-large">
+                    Real-time guidance beats<br>
+                    <span style="color: var(--text-soft);">post-call coaching.</span>
+                </h2>
+
+                <div class="split-screen">
+                    <div class="split-left">
+                        <div class="split-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                                <rect x="4" y="5" width="4" height="4" rx="0.5"/>
+                                <rect x="10" y="5" width="4" height="4" rx="0.5"/>
+                                <rect x="16" y="5" width="4" height="4" rx="0.5"/>
+                                <rect x="4" y="11" width="4" height="4" rx="0.5"/>
+                                <rect x="10" y="11" width="4" height="4" rx="0.5"/>
+                            </svg>
+                        </div>
+                        <div class="split-header">The Old Way: Manual Hunter</div>
+                        <div class="split-content">
+                            <strong>5+ windows open.</strong> Agent searching across systems while guest waits.<br><br>
+                            <strong>Cognitive overload.</strong> No context on who they are talking to.<br><br>
+                            <strong>Guessing.</strong> Over-compensating to buy goodwill. Margin erodes.
+                        </div>
+                    </div>
+                    <div class="split-right">
+                        <div class="split-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                        </div>
+                        <div class="split-header">The New Way: Guided Pro</div>
+                        <div class="split-content">
+                            <strong>Single screen.</strong> Guest's Platinum status glows at the top.<br><br>
+                            <strong>Full context.</strong> 12-cruise history visible before "hello."<br><br>
+                            <strong>Governed action.</strong> AI suggests the exact recovery offer to protect margin and loyalty.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-3" style="margin-top: 48px;">
+                    <div class="stat-block">
+                        <div class="stat-value">0ms</div>
+                        <div class="stat-label">Time to context<br>(not 90 seconds of searching)</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">$1,300</div>
+                        <div class="stat-label">Saved per call with<br>governed recovery</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Recognition rate<br>for high-value guests</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: THE SOLUTION (PRODUCTS) -->
+        <section class="slide bg-cream" id="slide-4">
+            <span class="corner-mark top-left">harpin AI</span>
+            <span class="corner-mark top-right">The Solution</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow">Three Products. One Mission.</p>
+                
+                <h2 class="headline-medium" style="color: var(--black); max-width: 800px;">
+                    Intelligence that sees what dashboards miss.<br>
+                    Action that happens while the customer is still there.
+                </h2>
+
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-name">Clarity</div>
+                        <div class="product-tagline">Know what's driving and draining your revenue.</div>
+                        <div class="product-description">
+                            Diagnostic intelligence that explains <em>why</em> performance changed. Ask questions in plain language. Get board-ready answers in seconds, not weeks of analyst time.
+                        </div>
+                        <div class="product-question">
+                            <strong>The question it answers:</strong>
+                            "Why are platinum customers canceling despite stable satisfaction scores?"
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-name">Concierge</div>
+                        <div class="product-tagline">Turn every interaction into a revenue moment.</div>
+                        <div class="product-description">
+                            Real-time frontline guidance. Surfaces context, prompts next-best actions, protects margin, all within your existing tools. No new screens. No re-training.
+                        </div>
+                        <div class="product-question">
+                            <strong>The moment it creates:</strong>
+                            "Agent sees 12-cruise repeat guest before they even start talking."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-grid" style="margin-top: 32px;">
+                    <div class="product-card" style="grid-column: 1 / -1; display: flex; gap: 40px; align-items: center;">
+                        <div style="flex: 0 0 auto;">
+                            <div class="product-name">Catalyst</div>
+                            <div class="product-tagline">See the value before you commit.</div>
+                        </div>
+                        <div class="product-description" style="margin-bottom: 0; flex: 1;">
+                            Our proof-of-value engagement. Bring your data, any format, any mess. We show you insights you did not know you had, in 48 hours. By the time we discuss contracts, you have already seen the value.
+                        </div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 32px; color: var(--text-muted); font-size: 0.95rem;">
+                    All powered by <strong style="color: var(--black);">Canon</strong>, the unified data foundation that creates a single source of truth without replacing your existing systems.
+                </p>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: CATALYST DEEP DIVE -->
+        <section class="slide bg-blue-gradient" id="slide-5">
+            <span class="corner-mark top-left">harpin AI</span>
+            <span class="corner-mark top-right">Catalyst</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow" style="color: rgba(255,255,255,0.7);">Introducing Catalyst</p>
+                
+                <h2 class="headline-large">
+                    <span style="color: var(--accent-glow);">Catalyst</span><br>
+                    <span class="serif" style="font-weight: 400;">See the value in your own data before you commit.</span>
+                </h2>
+                
+                <p class="subhead" style="margin-bottom: 8px;">
+                    Our proof-of-value engagement finds the "invisible" money hiding in your data. Low friction. High impact. Real insights in 48 hours.
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-step">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-day">Discovery</div>
+                        <div class="timeline-title">Define the Target</div>
+                        <div class="timeline-desc">We understand your pain and identify one high-value use case to prove it.</div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-day">Data Handoff</div>
+                        <div class="timeline-title">Any Format. Any Mess.</div>
+                        <div class="timeline-desc">Share a data sample. Spreadsheets, databases, APIs. We handle the complexity.</div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-day">Insight Session</div>
+                        <div class="timeline-title">See Your Data Live</div>
+                        <div class="timeline-desc">Within 48 hours, experience your own data through Clarity. Interactive. Real.</div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="timeline-marker">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                        <div class="timeline-day">Expand</div>
+                        <div class="timeline-title">Prove ROI. Then Scale.</div>
+                        <div class="timeline-desc">Start with one journey, validate the value, then expand across the enterprise.</div>
+                    </div>
+                </div>
+
+                <div class="quote-block" style="margin-top: 60px; border-color: rgba(255,255,255,0.3);">
+                    <p class="quote-text" style="font-size: 1.75rem;">
+                        "By the time we discuss contracts, you've already seen the value."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: THE TWO-WEEK WIN -->
+        <section class="slide bg-dark-gradient" id="slide-6">
+            <span class="corner-mark top-left">harpin AI</span>
+            <span class="corner-mark top-right">Speed to Value</span>
+            
+            <div class="slide-inner">
+                <p class="eyebrow">Quantifiable ROI from Day One</p>
+                
+                <h2 class="headline-large">
+                    Transformation doesn't<br>
+                    take <span class="strikethrough">eighteen months.</span>
+                </h2>
+
+                <div class="grid-2" style="margin-top: 48px;">
+                    <div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 24px;">Zero Re-Platforming</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.7; color: var(--text-soft); margin-bottom: 32px;">
+                            We do not replace your stack. We make it smarter. We integrate with your existing "Single Pane of Glass" in under 14 days.
+                        </p>
+
+                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 24px;">Predictive Protection</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.7; color: var(--text-soft);">
+                            We do not just find the leaks you have. We flag the ones that have not happened yet.
+                        </p>
+
+                        <div class="logo-row" style="justify-content: flex-start; margin-top: 40px;">
+                            <div class="logo-item" style="padding: 12px 20px; font-size: 0.85rem;">Salesforce</div>
+                            <div class="logo-item" style="padding: 12px 20px; font-size: 0.85rem;">Genesys</div>
+                            <div class="logo-item" style="padding: 12px 20px; font-size: 0.85rem;">AWS</div>
+                            <div class="logo-item" style="padding: 12px 20px; font-size: 0.85rem;">SAP</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); border-radius: 16px; padding: 40px;">
+                        <div style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 32px;">The Fast-Track Timeline</div>
+                        
+                        <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 28px;">
+                            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--accent), var(--accent-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2v6"/>
+                                    <path d="M12 22v-6"/>
+                                    <path d="M4.93 4.93l4.24 4.24"/>
+                                    <path d="M14.83 14.83l4.24 4.24"/>
+                                    <path d="M2 12h6"/>
+                                    <path d="M16 12h6"/>
+                                    <path d="M4.93 19.07l4.24-4.24"/>
+                                    <path d="M14.83 9.17l4.24-4.24"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 4px;">Day 1-3: Hydration</div>
+                                <div style="color: var(--text-soft); font-size: 0.9rem;">Data flows into unified layer</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 28px;">
+                            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--accent), var(--accent-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="m21 21-4.35-4.35"/>
+                                    <path d="M11 8v6"/>
+                                    <path d="M8 11h6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 4px;">Day 7: The Reveal</div>
+                                <div style="color: var(--text-soft); font-size: 0.9rem;">Hidden leaks surfaced with dollar impact</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 24px;">
+                            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--success), #34D399); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 3v18h18"/>
+                                    <path d="m19 9-5 5-4-4-3 3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 4px;">Day 14: The Lift</div>
+                                <div style="color: var(--text-soft); font-size: 0.9rem;">Live in production, ROI tracking</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: ABOUT AND CTA -->
+        <section class="slide bg-black" id="slide-7">
+            <span class="corner-mark top-left">harpin AI</span>
+            <span class="corner-mark top-right">About Us</span>
+            
+            <div class="slide-inner" style="text-align: center;">
+                <p class="eyebrow">The Intelligence Partner for Enterprise Leaders</p>
+                
+                <h2 class="headline-large">
+                    We turn the chaos of fragmented data<br>
+                    into a <span class="serif">high-velocity engine</span> for profitability.
+                </h2>
+
+                <p class="subhead" style="margin: 0 auto 32px;">
+                    Built by engineers from enterprise tech and industry veterans who have managed the very contact centers and CX stacks they're now fixing.
+                </p>
+
+                <div class="logo-row">
+                    <div class="logo-item">Princess Cruises</div>
+                    <div class="logo-item">Marriott</div>
+                    <div class="logo-item">RCI</div>
+                </div>
+
+                <div class="grid-3" style="margin-top: 48px;">
+                    <div class="stat-block">
+                        <div class="stat-value">$100M+</div>
+                        <div class="stat-label">Attributed revenue lift</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">$5M+</div>
+                        <div class="stat-label">Cost savings in 11 months</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">Days</div>
+                        <div class="stat-label">To first insight, not months</div>
+                    </div>
+                </div>
+
+                <div class="trust-row">
+                    <div class="trust-badge">SOC 2 Type II</div>
+                    <div class="trust-badge">GDPR Compliant</div>
+                    <div class="trust-badge">CCPA Compliant</div>
+                    <div class="trust-badge">Enterprise Security</div>
+                </div>
+
+                <div class="cta-section">
+                    <a href="#" class="cta-button">Request a Discovery Session</a>
+                    <p style="margin-top: 20px; color: rgba(255,255,255,0.4); font-size: 0.9rem;">
+                        See your own data through Clarity. No commitment required.
+                    </p>
+                </div>
+
+                <div style="margin-top: 60px; padding-top: 32px; border-top: 1px solid var(--border-light);">
+                    <p style="font-size: 1.4rem; font-weight: 300; color: rgba(255,255,255,0.5);">
+                        <span class="serif" style="font-style: italic;">"Every interaction is a revenue event.<br>We make sure the right action happens in the moment."</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        const container = document.querySelector('.slides-container');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(slides).indexOf(entry.target);
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        slides.forEach(slide => observer.observe(slide));
+        
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideIndex = parseInt(dot.dataset.slide);
+                slides[slideIndex].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const currentSlide = Array.from(slides).findIndex(slide => {
+                const rect = slide.getBoundingClientRect();
+                return rect.top >= 0 && rect.top < window.innerHeight / 2;
+            });
+
+            if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentSlide < slides.length - 1) {
+                    slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentSlide > 0) {
+                    slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+
+    <!--
+    ============================================
+    HARPIN AI STRIKE DECK - CUSTOMIZATION GUIDE
+    ============================================
+    
+    This deck follows executive storytelling principles:
+    1. Hook > 2. Problem > 3. Insight > 4. Solution > 5. Proof > 6. Next Steps
+    
+    VERTICAL CUSTOMIZATION:
+    
+    SLIDE 2 (Iceberg):
+    - Cruise: "Platinum guests" works as-is
+    - Hotels: Change to "Diamond members" / "Top-tier loyalty"
+    - Gaming: Change to "High-theo players" / "Whale recognition"
+    - QSR: Change to "Power users across brands"
+    
+    SLIDE 4 (Split Screen):
+    - Update the "12-cruise repeat guest" example:
+      - Hotels: "12-stay repeat guest at your Miami property"
+      - Gaming: "Quarterly player with $50K annual theo"
+      - Retail: "Omnichannel customer with $15K annual spend"
+    
+    SLIDE 8 (Logos):
+    - Swap client logos for vertical-relevant references
+    - Update metrics if vertical-specific numbers available
+    
+    HOOKS TO TEST:
+    - "Stop looking in the rearview mirror" (current - curiosity)
+    - "Your customer intelligence has a latency problem" (technical)
+    - "Everyone promised you a single customer view" (broken promise)
+    - "Who are your 100 most valuable customers?" (challenge)
+    
+    ============================================
+    -->
+</body>
+</html>

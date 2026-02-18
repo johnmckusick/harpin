@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>harpin AI - Sales Deck Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A;
+            --white: #FFFFFF;
+            --accent: #3B82F6;
+            --accent-light: #60A5FA;
+            --text-soft: rgba(255,255,255,0.7);
+            --border: rgba(255,255,255,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-soft);
+            margin-bottom: 60px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .intro {
+            font-size: 1.2rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+            max-width: 600px;
+            margin-bottom: 48px;
+        }
+
+        .deck-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .deck-card {
+            display: block;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            text-decoration: none;
+            color: var(--white);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deck-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .deck-card:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .deck-card:hover::before {
+            opacity: 1;
+        }
+
+        .deck-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .deck-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .deck-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-light);
+            border-radius: 4px;
+        }
+
+        .deck-badge.new {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+        }
+
+        .deck-description {
+            font-size: 1rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .deck-meta {
+            display: flex;
+            gap: 24px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .deck-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .arrow {
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .deck-card:hover .arrow {
+            opacity: 1;
+            right: 24px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .deck-card {
+                padding: 24px;
+            }
+
+            .deck-title {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">harpin <span>AI</span></div>
+        <div class="subtitle">Sales Deck Library</div>
+
+        <h1>Presentation Decks</h1>
+        <p class="intro">
+            Select a deck below to view the full presentation. Each deck is optimized for different sales scenarios and audiences.
+        </p>
+
+        <div class="deck-grid">
+            <a href="harpin-ai-strike-deck.html" class="deck-card">
+                <div class="deck-header">
+                    <div class="deck-title">Strike Deck</div>
+                    <div class="deck-badge new">New</div>
+                </div>
+                <p class="deck-description">
+                    Executive-focused sales deck following storytelling principles. Hook, problem, solution, proof. Designed for first meetings with C-level decision makers. Features the iceberg visual, funnel of truth, and Catalyst engagement model.
+                </p>
+                <div class="deck-meta">
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+                        8 slides
+                    </span>
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        15-20 min
+                    </span>
+                </div>
+                <div class="arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"/>
+                        <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                </div>
+            </a>
+
+            <a href="harpin-ai-manifesto-deck.html" class="deck-card">
+                <div class="deck-header">
+                    <div class="deck-title">Manifesto Deck</div>
+                    <div class="deck-badge">Brand</div>
+                </div>
+                <p class="deck-description">
+                    Brand manifesto presentation establishing harpin AI's positioning and philosophy. "Truth over dashboards. Action over analysis." Ideal for brand alignment conversations and strategic partnership discussions.
+                </p>
+                <div class="deck-meta">
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+                        7 slides
+                    </span>
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        10-15 min
+                    </span>
+                </div>
+                <div class="arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"/>
+                        <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                </div>
+            </a>
+
+            <a href="harpin-ai-sales-deck.html" class="deck-card">
+                <div class="deck-header">
+                    <div class="deck-title">Sales Deck</div>
+                    <div class="deck-badge">Core</div>
+                </div>
+                <p class="deck-description">
+                    Comprehensive enterprise sales deck with multiple hook options. Covers the full product suite (Clarity, Concierge, Catalyst) with case studies and proof points. Includes vertical customization guide.
+                </p>
+                <div class="deck-meta">
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+                        11 slides
+                    </span>
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        20-30 min
+                    </span>
+                </div>
+                <div class="arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"/>
+                        <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer">
+            Confidential / Trade Secrets &copy; 2026 harpin AI
+        </div>
+    </div>
+</body>
+</html>

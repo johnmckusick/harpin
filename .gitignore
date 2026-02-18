@@ -3,5 +3,7 @@
 
 # Except these files
 !.gitignore
+!index.html
 !harpin-ai-manifesto-deck.html
 !harpin-ai-sales-deck.html
+!harpin-ai-strike-deck.html
